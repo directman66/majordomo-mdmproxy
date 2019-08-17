@@ -1,0 +1,32 @@
+<!--
+VIEW_MODE: [#VIEW_MODE#]
+TAB: [#TAB#]
+TITLE: [#TITLE#]
+DATASOURCE: [#DATA_SOURCE#]
+
+<!-- table zwave_devices search -->
+
+
+<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
+<div style="overflow: hidden;">
+  <div style="width: 1000%;">
+
+<div style="float: left; width: 900px; height: 100px;">
+<input type="text"  class="form-control" value="[#URL#]" name="url" >
+</div>
+<div style="float: left; width: 100px; height: 100px;">
+<button type="submit" name="subm" value="url" class="btn btn-defaul btn-primary">OPEN</button>
+
+<input type="hidden" name="id" value="<#ID#>">
+<input type="hidden" name="view_mode" value="get_content">
+<input type="hidden" name="mode" value="update">
+
+</div>
+
+</div>
+</div>
+</fieldset>
+</form>
+
+
+[#CONTENT#]
