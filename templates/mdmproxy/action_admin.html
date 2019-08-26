@@ -1,116 +1,7 @@
-<div>
-
-	<button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#about"><#LANG_ABOUT#>&nbsp;&nbsp;<span class="glyphicon glyphicon-info-sign icon-white"></span>
-	</button>
-</div>
-
-<div class="collapse" id='api_settings'>&nbsp;
-<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
-<fieldset>
-<div class="form-group">
- <label class="col-lg-4 control-label"><#LANG_TLG_TOKEN#>
- <span class='support' tabindex="1" data-title="<#LANG_HELP_TOKEN#>">
- <i class="glyphicon glyphicon-info-sign"></i>
- </span>
-</label>
- <div class="col-lg-6"><input class="form-control" type="text" name="tlg_token" value="<#TLG_TOKEN#>" class="input"></div>
-</div>
-<div class="form-group">
- <label class="col-lg-4 control-label"><#LANG_TLG_STORAGE_PATH#>
- <span class='support' tabindex="1" data-title="<#LANG_HELP_STORAGE#>">
- <i class="glyphicon glyphicon-info-sign"></i>
- </label>
- <div class="col-lg-6"><input class="form-control" type="text" name="tlg_storage" value="<#TLG_STORAGE#>" class="input"></div>
-</div>
-<div class="form-group">
- <label class="col-lg-4 control-label"><#LANG_TLG_COUNT_ROW#>
- <span class='support' tabindex="1" data-title="<#LANG_HELP_COUNTROW#>">
- <i class="glyphicon glyphicon-info-sign"></i>
- </label>
- <div class="col-lg-6"><input class="form-control" type="text" name="tlg_count_row" value="<#TLG_COUNT_ROW#>" class="input"></div>
-</div>
-<div class="form-group">
- <label class="col-lg-4 control-label"><#LANG_TLG_TIMEOUT#>
- <span class='support' tabindex="1" data-title="<#LANG_HELP_TIMEOUT#>">
- <i class="glyphicon glyphicon-info-sign"></i>
- </label>
- <div class="col-lg-6"><input class="form-control" type="text" name="tlg_timeout" value="<#TLG_TIMEOUT#>" class="input"></div>
-</div>
-<div class="form-group">
- <label class="control-label"><#LANG_TLG_REG_USER#></label>
- <div class="controls"><input type="checkbox" name="tlg_reg_user" value="1"[#if TLG_REG_USER="1"#] checked[#endif#]></div>
-</div>
-<script type="text/javascript">
-	function showInfo(){  
-	    var url="?webhookinfo=1";
-		$.ajax({  
-			url: url,  
-			cache: false,  
-			success: function(html){  
-				$("#info").html(html);  
-			}  
-		});  
-	}  
-
-
-</script> 
-<div class="form-group">
- <label class="control-label"><#LANG_TLG_USE_WEBHOOK#></label>
- <div class="controls"><input type="checkbox" id="tlg_webhook" name="tlg_webhook" data-toggle="collapse" data-target="#webhook_settings" value="1"[#if TLG_WEBHOOK="1"#] checked[#endif#]></div>
-</div>
-<div class='collapse [#if TLG_WEBHOOK="1"#] in[#endif#]' id='webhook_settings'>
-<div class="form-group">
- <label class="col-lg-4 control-label"><#LANG_TLG_WEBHOOK_URL#></label>
-  <div class="col-lg-6">
-	<input class="form-control" type="text" name="tlg_webhook_url" value="<#TLG_WEBHOOK_URL#>" class="input">
- </div>
-	<small class="text-muted">/webhook_telegram.php</small>
-</div>
-<div class="form-group">
- <label class="col-lg-4 control-label"><#LANG_TLG_PATH_CERT#></label>
- <div class="col-lg-6">
-	<input class="form-control" type="text" name="tlg_webhook_cert" value="<#TLG_WEBHOOK_CERT#>" class="input"></br>
-	 <button onclick="setWebHook();return false;" class="btn btn-default">
-		<i class="glyphicon glyphicon-plus-sign"></i> <#LANG_TLG_WEBHOOK_SET#></button>
-	 <button onclick="cleanWebHook();return false;" class="btn btn-default">
-		<i class="glyphicon glyphicon-remove-sign"></i> <#LANG_TLG_WEBHOOK_CLEAN#></button>
-	 <button onclick="showInfo();return false;" class="btn btn-default">
-		<i class="glyphicon glyphicon-info-sign"></i> <#LANG_TLG_WEBHOOK_INFO#></button></br>
-    <div id="info"></div>
- </div>
-</div>
-</div>
-<div class="form-group">
- <label class="control-label"><#LANG_TLG_USE_PROXY#></label>
- <div class="controls"><input type="checkbox" id="tlg_useproxy" name="tlg_useproxy" data-toggle="collapse" data-target="#proxy_settings" value="1"[#if TLG_USEPROXY="1"#] checked[#endif#]></div>
-</div>
-
-
-<div class="form-group">
- <label class="control-label">Debug</label>
- <div class="controls"><input type="checkbox" name="tlg_debug" value="1"[#if TLG_DEBUG="1"#] checked[#endif#]></div>
-</div>
-<label class="control-label" style="visibility:hidden">"<#TLG_test#>"</label>
-<div class="form-actions">
-<button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_UPDATE#></button>
-<input type="hidden" name="view_mode" value="update_settings">
-<input type="hidden" name="mode" value="update">
-<input type="hidden" name="tab" value="<#TAB#>"> 
-</div>
-</fieldset>
-</form>
-</div>
-<br/>
+<div><div>
 
 
 
-
-<div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="about1" aria-hidden="true">
-<!-- <div id="about" class="modal hide"> -->
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 				<h4 class="modal-title">MDM proxy configurator</h4>
 			</div>
 			<div class="modal-body">
@@ -125,18 +16,19 @@
 				<p class="float-left">
 				
 				<ul>
-                    <li>Тип сервера: [#SERVER#]</li>
+                    Тип сервера: [#SERVER#]<br>
 <br>
-                      Для корректной работы должен быть выполнен следующий код в консоли:
+
+            <li>update для apache2.conf :  
+ [#if conftext==""#] <font color="red"><b>не установлен </b><br>
+ Для корректной работы должен быть выполнен следующий код в консоли:<br>[#cmd#]
+</font>
+[#else#] <b>установлен </b> [#endif#]
+
+</li>
+
 <br>
-[#cmd#]
-
-<br><br>
-
-            <li>update для apache2.conf :  [#if conftext=""#] <font color="red"><b>не установлен </b></font>[#else#] <b>установлен </b> [#endif#]</li>
-
-<br><br>
-                    <li>Установленные модули: </li>
+                    Установленные модули: <br>
                     <li>mod_proxy:  [#if mod_proxy=""#] <font color="red"><b>не установлен </b></font>[#else#] <b>установлен </b> [#endif#]</li>
                     <li>mod_proxy_html:  [#if mod_proxy_html=""#] <font color="red"><b>не установлен </b> </font>[#else#] <b>установлен </b> [#endif#]</li>
                     <li>mod_proxy_http:  [#if mod_proxy_http=""#] <font color="red"><b>не установлен </b> </font>[#else#] <b>установлен </b> [#endif#]</li>
@@ -154,9 +46,9 @@
 				</ul>
 
 
-                </p>
-				<hr size="1">
+</p>
 
+				<hr size="1">
 				<ul>
                     Список виртуальных хостов [#path#]:<br>
                     <li>[#hosts#] </li>
@@ -169,45 +61,60 @@
 
 				</ul>
 
-			</div>
-			
-			<div class="modal-footer">
-				<div class="pull-left">Telegram: <a href="https://telegram.me/Dmitrii_Sannikov" target="_blank">@Dmitrii_Sannikov</a> </div>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
 
+				<hr size="1">
+
+<!--<a href="" onclick="runtest()"> Протестировать конфиг [#servertype#]</a>  <br> -->
+Результат тестирования конфигов: <BR>
+[#if TESTCONFIG="Syntax OK" #] <font color="green">[#TESTCONFIG#]</font> <a href="?view_mode=restart_apache"> Перезапустить apache2 </a>
+[#else#]
+<font color="red">[#TESTCONFIG#]</font>
+[#endif#]
+<br><br>
+systemctl: <br>
+<pre>[#state#]</pre>
 <!--
-VIEW_MODE: [#VIEW_MODE#]
-TAB: [#TAB#]
-TITLE: [#TITLE#]
-DATASOURCE: [#DATA_SOURCE#]
-
-<!-- table zwave_devices search -->
 
 
-<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
-<div style="overflow: hidden;">
-  <div style="width: 1000%;">
+<script type="text/javascript">
+    function runtest() {
 
-<div style="float: left; width: 900px; height: 100px;">
-<input type="text"  class="form-control" value="[#URL#]" name="url" >
+// clearTimeout(logTimer);
+
+// window.clearTimeout(logTimer);
+//  clearTimeout(deviceRefreshTimer[#ID#]);
+        var url="/ajax/mdmproxy.html?op=testcfg";
+
+        $.ajax({
+            url: url,
+            cache: false,
+            success: function(html){
+                $("#auth_log").html(html);
+            }
+        });
+
+}
+   runtest();
+
+    
+</script>
+
+<div  id="viewlog" tabindex="-1" role="dialog" aria-labelledby="about1" aria-hidden="true" height="100"> 
+
+
+    <div>
+
+
+    <p  id="auth_log" >    </p>
+
+   </div>
+
 </div>
-<div style="float: left; width: 100px; height: 100px;">
-<button type="submit" name="subm" value="url" class="btn btn-defaul btn-primary">OPEN</button>
-
-<input type="hidden" name="id" value="<#ID#>">
-<input type="hidden" name="view_mode" value="get_content">
-<input type="hidden" name="mode" value="update">
-
-</div>
-
-</div>
-</div>
-</fieldset>
-</form>
+-->
 
 
-[#CONTENT#]
+
+			</div>
+
+                </p>			
+
