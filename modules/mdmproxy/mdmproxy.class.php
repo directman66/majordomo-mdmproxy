@@ -102,6 +102,52 @@ function run() {
   $out['MODE']=$this->mode;
   $out['ACTION']=$this->action;
   $out['TAB']=$this->tab;
+
+  $out['SERVER']=$_SERVER['SERVER_SOFTWARE'];
+$modules=apache_get_modules();
+
+
+$out['mod_proxy']=array_search ('mod_proxy', $modules);
+$out['mod_proxy_html']=array_search ('mod_proxy_html', $modules);
+$out['mod_proxy_http']=array_search ('mod_proxy_http', $modules);
+$out['mod_rewrite']=array_search ('mod_rewrite', $modules);
+
+$out['mod_substitute']=array_search ('mod_proxy', $modules);   
+$out['mod_proxy_balancer']=array_search ('mod_proxy_balancer', $modules);   
+$out['mod_alias']=array_search ('mod_proxy_balancer', $modules);    
+
+
+$servertype='apache';
+//$path=ROOT.'modules/mdmproxy' .  '/'.$servertype.'/sites-enable/';
+
+$path='/var/www/modules/mdmproxy/apache/sites-enable/';
+///$files=scandir();
+
+///glob("*.conf");
+
+            if ($handle = opendir($path)) {
+                $files = array();
+
+                while (false !== ($entry = readdir($handle))) {
+                    if ($entry == '.' || $entry == '..')
+                        continue;
+
+//                    $files[] = array('TITLE' => $entry);
+                    $files[] = $entry;
+                }
+                 }
+
+$out['path']=$path;
+$out['hosts']=implode (PHP_EOL,$files);
+//$out['hosts']=$files;
+
+
+
+
+
+ $out['MODULES']=implode (PHP_EOL.PHP_EOL,$modules);
+
+
   $this->data=$out;
   $p=new parser(DIR_TEMPLATES.$this->name."/".$this->name.".html", $this->data, $this);
   $this->result=$p->result;
@@ -129,13 +175,40 @@ $out['URL'] = $url;
 $par = $_GET['par'];
 
 
+//include_once('/var/www/modules/mdmproxy/simple_html_dom/simple_html_dom.php');
+include_once(ROOT . "modules/mdmproxy/simple_html_dom/simple_html_dom.php");
+
 //if ($par=='') $par='/'.$rec['PASSWORD'];
+/*
+
+
+include_once('/var/www/modules/mdmproxy/simple_html_dom/simple_html_dom.php');
+$html = file_get_html($url);
+
+// Find all images 
+foreach($html->find('img') as $element) 
+//       echo $element->src . '<br>';
+debmes($element->src, 'mdmrpoxy');
+
+// Find all links 
+foreach($html->find('a') as $element) 
+//       echo $element->href . '<br>';
+debmes($element->href, 'mdmrpoxy');
+  */
+
 
 $data=$this->gethttpmessage($url,$par); 
 
 
 //$data=$this->gethttpmessage($rec['IP'], '/'. $rec['PASSWORD']);
 debmes($data, 'mdmrpoxy');
+
+//preg_match_all('~<a[^>]+href=[^>]+>~sim', $data, $links);
+//preg_match_all('href=[^>]', $data, $links);
+preg_match_all("/<[Aa][\s]{1}[^>]*[Hh][Rr][Ee][Ff][^=]*=[ '\"\s]*([^ \"'>\s#]+)[^>]*>/", $data, $links);
+
+debmes($links, 'mdmrpoxy');
+
 $out['CONTENT']=$data;
 
 
