@@ -51,30 +51,8 @@
 			}  
 		});  
 	}  
-	function setWebHook(){  
-		var webhook_url = document.getElementsByName('tlg_webhook_url')[0].value;
-		webhook_url = encodeURIComponent(webhook_url);
-	    var webhook_cert = document.getElementsByName('tlg_webhook_cert')[0].value;
-		webhook_cert = encodeURIComponent(webhook_cert);
-	    var url="?setwebhook=1&tlg_webhook_url="+webhook_url+"&tlg_webhook_cert="+webhook_cert;
-		$.ajax({  
-			url: url,  
-			cache: false,  
-			success: function(html){  
-				$("#info").html(html);  
-			}  
-		});  
-	}  
-	function cleanWebHook(){  
-	    var url="?cleanwebhook=1";
-		$.ajax({  
-			url: url,  
-			cache: false,  
-			success: function(html){  
-				$("#info").html(html);  
-			}  
-		});  
-	}  
+
+
 </script> 
 <div class="form-group">
  <label class="control-label"><#LANG_TLG_USE_WEBHOOK#></label>
@@ -141,12 +119,23 @@
 				</div>
                 <p class="float-left"> Модуль конфигурирования виртуальных хостов для мажордомо.<br>
 				Обсуждение модуля <a href="http://majordomo.smartliving.ru/forum/viewtopic.php?f=5&t=" target="_blank">здесь</a>.<br>
+
 				</p>
 				<hr size="1">
 				<p class="float-left">
 				
 				<ul>
                     <li>Тип сервера: [#SERVER#]</li>
+<br>
+                      Для корректной работы должен быть выполнен следующий код в консоли:
+<br>
+[#cmd#]
+
+<br><br>
+
+            <li>update для apache2.conf :  [#if conftext=""#] <font color="red"><b>не установлен </b></font>[#else#] <b>установлен </b> [#endif#]</li>
+
+<br><br>
                     <li>Установленные модули: </li>
                     <li>mod_proxy:  [#if mod_proxy=""#] <font color="red"><b>не установлен </b></font>[#else#] <b>установлен </b> [#endif#]</li>
                     <li>mod_proxy_html:  [#if mod_proxy_html=""#] <font color="red"><b>не установлен </b> </font>[#else#] <b>установлен </b> [#endif#]</li>
