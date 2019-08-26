@@ -143,7 +143,14 @@ $out['hosts']=implode (PHP_EOL,$files);
 
 
 
+$confpath='/etc/apache2/apache2.conf';
+$conf=file_get_contents($confpath);
 
+//$out['conftext']=$conf;
+
+$out['conftext']=strpos ($conf,'/modules/mdmproxy/apache/sites-enable/');    
+
+$out['cmd']='sudo echo "IncludeOptional '.ROOT.'/modules/mdmproxy/apache/sites-enable/*.conf #mdmproxy line">>'.$confpath;
 
  $out['MODULES']=implode (PHP_EOL.PHP_EOL,$modules);
 
