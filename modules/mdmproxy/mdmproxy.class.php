@@ -103,10 +103,18 @@ function run() {
   $out['ACTION']=$this->action;
   $out['TAB']=$this->tab;
 
-  $out['SERVER']=$_SERVER['SERVER_SOFTWARE'];
+$server=$_SERVER['SERVER_SOFTWARE'];
+$lserver=mb_strtolower($_SERVER['SERVER_SOFTWARE']);
+
+
+//  $out['SERVER']=strpos( ' '.$lserver,'apache');
+  $out['SERVER']= $server;
+
+if (strpos(' '.$lserver, 'apache')>0) 
+{$servertype='apache';}
+else {$servertype='other';}
+
 $modules=apache_get_modules();
-
-
 $out['mod_proxy']=array_search ('mod_proxy', $modules);
 $out['mod_proxy_html']=array_search ('mod_proxy_html', $modules);
 $out['mod_proxy_http']=array_search ('mod_proxy_http', $modules);
@@ -117,7 +125,6 @@ $out['mod_proxy_balancer']=array_search ('mod_proxy_balancer', $modules);
 $out['mod_alias']=array_search ('mod_proxy_balancer', $modules);    
 
 
-$servertype='apache';
 //$path=ROOT.'modules/mdmproxy' .  '/'.$servertype.'/sites-enable/';
 
 $path='/var/www/modules/mdmproxy/apache/sites-enable/';
@@ -138,21 +145,64 @@ $path='/var/www/modules/mdmproxy/apache/sites-enable/';
                  }
 
 $out['path']=$path;
-$out['hosts']=implode (PHP_EOL,$files);
+$cnt=count($files);
+  for($i=0;$i<$cnt;$i++) {
+
+//$str.=substr($files[$i],0,-1) .'<a hreff="?view_mode=file_on&file='.$path.$files[$i].'"> вкл</a>'.'   <a hreff=""> выкл</a>'."<br>";
+$str.=substr($files[$i],0,-1);
+if (substr($files[$i],-5,5)=='.conf') {$str.='......<font color="green">включен</font>......';} else  {$str.='....<font color="red">выключен</font>.....';}
+
+
+$str.='<a href="?view_mode=file_on$type='.$servertype.'&file='.$files[$i].'"> вкл</a>'.' <a href="?view_mode=file_off$type='.$servertype.'&file='.$files[$i].'"> выкл</a>'."<br>";
+
+
+
+}
+
+//$out['hosts']=implode ('<br>',$files);
 //$out['hosts']=$files;
+$out['hosts']=$str;
 
 
 
+
+if ($servertype=='apache') 
+{
 $confpath='/etc/apache2/apache2.conf';
 $conf=file_get_contents($confpath);
-
 //$out['conftext']=$conf;
-
 $out['conftext']=strpos ($conf,'/modules/mdmproxy/apache/sites-enable/');    
-
 $out['cmd']='sudo echo "IncludeOptional '.ROOT.'/modules/mdmproxy/apache/sites-enable/*.conf #mdmproxy line">>'.$confpath;
+}
 
- $out['MODULES']=implode (PHP_EOL.PHP_EOL,$modules);
+
+$out['MODULES']=implode (PHP_EOL.PHP_EOL,$modules);
+
+//$out['TESTCONFIG']=shell_exec('apache2 -t ');
+//$cmd='/usr/sbin/apache2 -h';
+
+
+$a=shell_exec("sudo systemctl status apache2");
+$a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
+
+$out['state']=$a;
+
+
+
+
+$cmd='apache2 -t 2>&1';
+$exec=exec($cmd, $output);
+//$output=shell_exec('apache2 -t ');
+debmes('cmd '.$cmd, 'mdmproxy');
+debmes('error: '.$error, 'mdmproxy');
+debmes('$output: '.$output, 'mdmproxy');
+debmes($output, 'mdmproxy');
+debmes('$exec: '.$exec, 'mdmproxy');
+$out['TESTCONFIG']=implode (PHP_EOL.PHP_EOL,$output);
+//$out['TESTCONFIG']=$output;
+//out['TESTCONFIG']=('apache2 -t ');
+
+
 
 
   $this->data=$out;
@@ -174,6 +224,18 @@ function admin(&$out) {
  
 
 if ($url=='') $out['URL'] = 'http://192.168.1.1';
+
+
+ if ($this->view_mode=='restart_apache') {
+$cmd='
+$cmd="sudo systemctl restart apache2";
+$exec=exec($cmd);
+';
+ SetTimeOut('restart_apache2',$cmd, '12'); 
+redirect('?');
+
+}
+
  if ($this->view_mode=='get_content') {
 
 global $url;
@@ -264,6 +326,27 @@ if ($this->tab=='' || $this->tab=='indata') {
 * @access public
 */
 function usual(&$out) {
+
+
+    if ($this->ajax) {
+        global $op;
+        global $fn;
+        $result=array();
+
+      if ($op == 'testcfg'  ) {
+//echo "123";      
+//echo $fn;      
+
+//print_r(time().": ". $fn."<hr>");
+
+$result=shell_exec('apache2 -t ');
+
+
+        echo 'res:'.time().$result;
+//        exit;
+    }
+}
+
  $this->admin($out);
 }
 /**
