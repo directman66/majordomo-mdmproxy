@@ -18,7 +18,7 @@ class mdmproxy extends module {
 function mdmproxy() {
   $this->name="mdmproxy";
   $this->title="mdmproxy";
-  $this->module_category="<#LANG_SECTION_APPLICATIONS#>";
+  $this->module_category="<#LANG_SECTION_SETTINGS#>";
   $this->checkInstalled();
 }
 /**
