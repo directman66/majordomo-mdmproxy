@@ -1,0 +1,25 @@
+DocumentRoot /var/www
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride All
+        </Directory>
+        <Directory /var/www/>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                Order allow,deny
+                allow from all
+        </Directory>
+
+
+
+ProxyRequests Off
+<Proxy *>
+#AuthType Basic
+#AuthName “The computer says no!”
+#AuthUserFile /etc/apache2/htpasswd.default
+#Require valid-user
+Order allow,deny
+#Satisfy any
+</Proxy>
+
+ProxyPass /shell/ http://127.0.0.1:32768/
