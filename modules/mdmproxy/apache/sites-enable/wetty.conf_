@@ -1,0 +1,10 @@
+RewriteCond %{REQUEST_URI}  ^/wetty/socket.io [NC]
+RewriteCond %{QUERY_STRING} transport=websocket [NC]
+RewriteRule /wetty/socket.io/(.*) ws://localhost:32768/wetty/socket.io/$1 [P,L]
+
+<LocationMatch ^/wetty/(.*)>
+  DirectorySlash On
+  Require all granted
+  ProxyPassMatch http://127.0.0.1:32768
+  ProxyPassReverse /wetty/
+</LocationMatch>
