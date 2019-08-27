@@ -125,9 +125,9 @@ $out['mod_proxy_balancer']=array_search ('mod_proxy_balancer', $modules);
 $out['mod_alias']=array_search ('mod_proxy_balancer', $modules);    
 
 
-//$path=ROOT.'modules/mdmproxy' .  '/'.$servertype.'/sites-enable/';
+$path=ROOT.'modules/mdmproxy' .  '/'.$servertype.'/sites-enable/';
 
-$path='/var/www/modules/mdmproxy/apache/sites-enable/';
+//$path='/var/www/modules/mdmproxy/apache/sites-enable/';
 ///$files=scandir();
 
 ///glob("*.conf");
@@ -186,6 +186,16 @@ $a=shell_exec("sudo systemctl status apache2");
 $a =  str_replace( array("\r\n","\r","\n") , '<br>' , $a);
 
 $out['state']=$a;
+
+$a=shell_exec("apachectl -S");
+//$a=shell_exec("apache2ctl " );
+//$a=shell_exec("apache2ctl -S");
+//$a=shell_exec("apache2 -S");
+
+
+
+$out['hostlist']= str_replace( array("\r\n","\r","\n") , '<br>' , $a);
+
 
 
 
