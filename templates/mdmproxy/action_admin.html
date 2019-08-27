@@ -9,7 +9,7 @@
 
 				</div>
                 <p class="float-left"> Модуль конфигурирования виртуальных хостов для мажордомо.<br>
-				Обсуждение модуля <a href="http://majordomo.smartliving.ru/forum/viewtopic.php?f=5&t=" target="_blank">здесь</a>.<br>
+				Обсуждение модуля <a href="https://mjdm.ru/forum/viewtopic.php?f=5&t=6673#p106934" target="_blank">здесь</a>.<br>
 
 				</p>
 				<hr size="1">
@@ -19,24 +19,27 @@
                     Тип сервера: [#SERVER#]<br>
 <br>
 
-            <li>update для apache2.conf :  
- [#if conftext==""#] <font color="red"><b>не установлен </b><br>
+            update для apache2.conf [#conftext#]:  
+ [#if conftext=="
+<!--7117-->
+"#] <font color="red"><b>не установлен </b><br>
+<pre>
  Для корректной работы должен быть выполнен следующий код в консоли:<br>[#cmd#]
+</pre>
 </font>
 [#else#] <b>установлен </b> [#endif#]
-
-</li>
+<br>
 
 <br>
-                    Установленные модули: <br>
-                    <li>mod_proxy:  [#if mod_proxy=""#] <font color="red"><b>не установлен </b></font>[#else#] <b>установлен </b> [#endif#]</li>
-                    <li>mod_proxy_html:  [#if mod_proxy_html=""#] <font color="red"><b>не установлен </b> </font>[#else#] <b>установлен </b> [#endif#]</li>
-                    <li>mod_proxy_http:  [#if mod_proxy_http=""#] <font color="red"><b>не установлен </b> </font>[#else#] <b>установлен </b> [#endif#]</li>
-                    <li>mod_rewrite:  [#if mod_rewrite=""#] <font color="red"><b>не установлен </b> </font>[#else#] <b>установлен </b> [#endif#]</li>
-                    <li>mod_substitute:  [#if mod_substitute=""#] <font color="red"><b>не установлен </b> </font>[#else#] <b>установлен </b> [#endif#]</li>
-                    <li>mod_proxy_balancer:  [#if mod_proxy_balancer=""#] <font color="red"><b>не установлен </b> </font>[#else#] <b>установлен </b> [#endif#]</li>
-                    <li>mod_alias:  [#if mod_alias=""#] <font color="red"><b>не установлен </b> </font>[#else#] <b>установлен </b> [#endif#]</li>
-
+                    Установленные модули sudo apachectl -M: <br><pre>
+mod_proxy:  [#if mod_proxy=""#] <font color="red"><b>не установлен </b></font>[#else#] <b>установлен </b> [#endif#]
+mod_proxy_html:  [#if mod_proxy_html=""#] <font color="red"><b>не установлен </b> </font>[#else#] <b>установлен </b> [#endif#]
+mod_proxy_http:  [#if mod_proxy_http=""#] <font color="red"><b>не установлен </b> </font>[#else#] <b>установлен </b> [#endif#]
+mod_rewrite:  [#if mod_rewrite=""#] <font color="red"><b>не установлен </b> </font>[#else#] <b>установлен </b> [#endif#]
+mod_substitute:  [#if mod_substitute=""#] <font color="red"><b>не установлен </b> </font>[#else#] <b>установлен </b> [#endif#]
+mod_proxy_balancer:  [#if mod_proxy_balancer=""#] <font color="red"><b>не установлен </b> </font>[#else#] <b>установлен </b> [#endif#]
+mod_alias:  [#if mod_alias=""#] <font color="red"><b>не установлен </b> </font>[#else#] <b>установлен </b> [#endif#]
+</pre>
 <!--
                     <li></li>
                     <li>[#MODULES#]</li>
@@ -50,29 +53,29 @@
 
 				<hr size="1">
 				<ul>
-                    Список виртуальных хостов [#path#]:<br>
-                    <li>[#hosts#] </li>
+                    Список файлов конфигурации [#path#]:<br>
+                    <pre>[#hosts#] </pre>
+				</ul>
 
-<!--
-                    <li></li>
-                    <li>[#MODULES#]</li>
-    -->
-
-
+				<hr size="1">
+				<ul>
+                    Список виртуальных хостов apachectl -S:<br>
+                    <pre>[#hostlist#] </pre>
 				</ul>
 
 
 				<hr size="1">
-
+				<ul>
 <!--<a href="" onclick="runtest()"> Протестировать конфиг [#servertype#]</a>  <br> -->
 Результат тестирования конфигов: <BR>
-[#if TESTCONFIG="Syntax OK" #] <font color="green">[#TESTCONFIG#]</font> <a href="?view_mode=restart_apache"> Перезапустить apache2 </a>
+[#if TESTCONFIG="Syntax OK" #] <font color="green">[#TESTCONFIG#]</font> <a href="?view_mode=restart_apache" onClick="return confirm('Are you sure? Please confirm.')"> Перезапустить apache2 </a>
 [#else#]
 <font color="red">[#TESTCONFIG#]</font>
 [#endif#]
 <br><br>
-systemctl: <br>
+sudo systemctl status apache2: <br>
 <pre>[#state#]</pre>
+				</ul>
 <!--
 
 
